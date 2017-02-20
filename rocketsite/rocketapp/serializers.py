@@ -18,10 +18,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class RocketSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Rocket
-        fields = ('owner', 'name', 'flight_count')
+        fields = (
+            'owner',
+            'name',
+            'flight_count',
+            'weight',
+            'max_motor_diam',
+            'max_altitude',
+        )
 
 
 class FlightSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FlightLog
-        fields = ('rocket', 'launch_date', 'notes_text')
+        fields = (
+            'rocket',
+            'launch_date',
+            'notes_text',
+            'motor',
+            'delay',
+            'altitude',
+            'flight_result',
+        )
