@@ -6,7 +6,11 @@ from datetime import date
 
 
 class Rocket(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User,
+        related_name='rockets',
+        on_delete=models.CASCADE
+    )
     name = models.CharField(max_length=150)
     flight_count = models.IntegerField(default=0)
     weight = models.FloatField(default=0)
@@ -18,7 +22,11 @@ class Rocket(models.Model):
 
 
 class FlightLog(models.Model):
-    rocket = models.ForeignKey(Rocket, on_delete=models.CASCADE)
+    rocket = models.ForeignKey(
+        Rocket,
+        related_name='flights',
+        on_delete=models.CASCADE
+    )
     launch_date = models.DateField(default=date.today)
     notes_text = models.TextField(default="")
     motor = models.CharField(max_length=100, default="")
