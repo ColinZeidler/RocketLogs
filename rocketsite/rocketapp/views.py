@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from .models import Rocket, FlightLog
 from .serializers import *
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 # Create your views here.
 
@@ -17,10 +17,14 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class RocketViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = Rocket.objects.all()
     serializer_class = RocketSerializer
 
 
 class FlightViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = FlightLog.objects.all()
     serializer_class = FlightSerializer
+
+    # TODO override create, so that it updates the flight count of the related rocket

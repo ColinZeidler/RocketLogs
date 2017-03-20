@@ -12,10 +12,11 @@ class GroupSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups', 'rockets')
+        fields = ('url', 'username', 'email', 'groups', 'rockets', 'flights')
 
 
 class RocketSerializer(serializers.ModelSerializer):
+    #owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Rocket
         fields = (
@@ -30,10 +31,14 @@ class RocketSerializer(serializers.ModelSerializer):
 
 
 class FlightSerializer(serializers.ModelSerializer):
+    #owner = serializers.ReadOnlyField(source='owner.username')
+    rocketName = serializers.ReadOnlyField(source='rocket.name')
     class Meta:
         model = FlightLog
         fields = (
+            'owner',
             'rocket',
+            'rocketName',
             'launch_date',
             'notes_text',
             'motor',

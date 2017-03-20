@@ -22,6 +22,11 @@ class Rocket(models.Model):
 
 
 class FlightLog(models.Model):
+    owner = models.ForeignKey(
+        User,
+        related_name='flights',
+        on_delete=models.CASCADE
+    )
     rocket = models.ForeignKey(
         Rocket,
         related_name='flights',
@@ -51,4 +56,3 @@ class FlightLog(models.Model):
         choices=FLIGHT_RESULT_CHOICES,
         default=NO_FIRE,
     )
-
