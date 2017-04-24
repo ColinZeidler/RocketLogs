@@ -56,3 +56,6 @@ class FlightLog(models.Model):
         choices=FLIGHT_RESULT_CHOICES,
         default=NO_FIRE,
     )
+
+    def __str__(self):
+        return str(self.rocket) + " flown " + str(self.launch_date) + " on " + str(self.motor)

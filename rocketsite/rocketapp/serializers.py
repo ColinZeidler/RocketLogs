@@ -12,7 +12,12 @@ class GroupSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups', 'rockets', 'flights')
+        fields = ('url', 'username', 'password', 'email', 'groups', 'rockets', 'flights')
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'rockets': {'read_only': True},
+            'flights': {'read_only': True},
+        }
 
 
 class RocketSerializer(serializers.ModelSerializer):
@@ -29,6 +34,9 @@ class RocketSerializer(serializers.ModelSerializer):
             'max_altitude',
             'flights',
         )
+        extra_kwargs = {
+            'flights': {'read_only': True},
+        }
 
 
 class FlightSerializer(serializers.ModelSerializer):
