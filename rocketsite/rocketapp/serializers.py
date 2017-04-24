@@ -16,7 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RocketSerializer(serializers.ModelSerializer):
-    #owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
+
     class Meta:
         model = Rocket
         fields = (
@@ -31,8 +32,9 @@ class RocketSerializer(serializers.ModelSerializer):
 
 
 class FlightSerializer(serializers.ModelSerializer):
-    #owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     rocketName = serializers.ReadOnlyField(source='rocket.name')
+
     class Meta:
         model = FlightLog
         fields = (
