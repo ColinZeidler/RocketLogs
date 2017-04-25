@@ -22,21 +22,24 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'password', 'email', 'groups', 'rockets', 'flights')
+        fields = ('id', 'url', 'username', 'password', 'email', 'groups', 'rockets', 'flights')
         extra_kwargs = {
             'password': {'write_only': True},
             'rockets': {'read_only': True},
             'flights': {'read_only': True},
+            'id': {'read_only': True},
         }
 
 
 class RocketSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner_name = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Rocket
         fields = (
+            'id',
             'owner',
+            'owner_name',
             'name',
             'flight_count',
             'weight',
@@ -46,19 +49,23 @@ class RocketSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             'flights': {'read_only': True},
+            'id': {'read_only': True},
+            'owner': {'read_only': True},
         }
 
 
 class FlightSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
-    rocketName = serializers.ReadOnlyField(source='rocket.name')
+    owner_name = serializers.ReadOnlyField(source='owner.username')
+    rocket_name = serializers.ReadOnlyField(source='rocket.name')
 
     class Meta:
         model = FlightLog
         fields = (
+            'id',
             'owner',
+            'owner_name',
             'rocket',
-            'rocketName',
+            'rocket_name',
             'launch_date',
             'notes_text',
             'motor',
@@ -66,3 +73,7 @@ class FlightSerializer(serializers.ModelSerializer):
             'altitude',
             'flight_result',
         )
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'owner': {'read_only': True},
+        }
